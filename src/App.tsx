@@ -7,8 +7,11 @@ const queryClient = new QueryClient();
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <main className="flex min-h-screen items-center justify-center py-32">
-        <Entrypoint />
+      <header className="max-w-[930px] mx-auto pt-32 pb-10">
+        <h1>My Cards Manager</h1>
+      </header>
+      <main className="flex items-center justify-center pb-32">
+          <Entrypoint />
       </main>
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>

@@ -1,9 +1,11 @@
 import { FC } from "react";
 import { XMarkIcon } from "./icons";
 
-type ButtonProps = React.ComponentProps<"button">;
+type ToggleButtonProps<T = React.ReactNode> = React.ComponentProps<"button"> & {
+  children: T;
+};
 
-export const ExpandButton: FC<ButtonProps> = ({ children, ...props }) => {
+export const ToggleButton: FC<ToggleButtonProps> = ({ children, ...props }) => {
   return (
     <button className="hover:text-gray-700 transition-colors flex items-center justify-center" {...props}>
       {children}
@@ -11,10 +13,11 @@ export const ExpandButton: FC<ButtonProps> = ({ children, ...props }) => {
   );
 };
 
-export const DeleteButton: FC<Omit<ButtonProps, "children">> = (props) => {
+export const DeleteButton: FC<Omit<ToggleButtonProps, "children">> = (props) => {
   return (
     <button className="hover:text-gray-700 transition-colors flex items-center justify-center" {...props}>
       <XMarkIcon />
     </button>
   );
 };
+

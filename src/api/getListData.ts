@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import { useStore } from "../store";
 import mockJson from "./mock.json";
 
 export type ListItem = {
@@ -6,11 +7,13 @@ export type ListItem = {
   title: string;
   description: string;
   isVisible: boolean;
+  isExpanded: boolean
 };
 
-export type DeletedListItem = Omit<ListItem, "description">;
+export type DeletedListItem = Omit<ListItem, "description" | "isExpanded">;
 
 export const useGetListData = () => {
+  const currentCards = useStore((state) => state.cards);
   const query = useQuery({
     queryKey: ["list"],
     queryFn: async () => {
@@ -24,7 +27,9 @@ export const useGetListData = () => {
       const mockData = mockJson as Omit<ListItem, "isVisible">[];
 
       return shuffle(mockData).map((item) => {
-        return { ...item, isVisible: getRandom() > 50 ? true : false };
+        const currentItem = currentCards.find(currentCard => currentCard.id === item.id);
+        const isExpanded = currentItem ? currentItem.isExpanded : false;
+        return { ...item, isVisible: getRandom() > 50 ? true : true, isExpanded };
       });
     },
   });
